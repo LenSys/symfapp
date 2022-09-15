@@ -8,7 +8,32 @@
     <h1>Symfony Todo App</h1>
 
     <h2>Todos</h2>
-    <p>No todos available.</p>
+    {% if(todoItems) %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">Todo name</th>
+                <th scope="col">Is complete?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for todoItem in todoItems %}
+                    <tr>
+                    <td>{{ todoItem.name }}</td>
+                    <td>
+                        {% if(todoItem.isIsComplete) %}
+                            <span class="text-success">✓</span>
+                        {% else %}  
+                            <span class="text-danger">x</span>
+                        {% endif %}
+                    </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No todos available.</p>
+    {% endif %}
     <a class="btn btn-primary" href="{{ path('app_todos.create') }}">Create Todo</a>
 </div>
 {% endblock %}

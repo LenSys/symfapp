@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\TodoItemRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/todos', name: 'app_todos.')]
 class TodosController extends AbstractController
 {
     #[Route('', name: 'index')]
-    public function index(): Response
+    public function index(TodoItemRepository $todoItemRepository): Response
     {
+        $todoItems = $todoItemRepository->findAll();
+        
         return $this->render('todos/index.html.twig', [
-            'controller_name' => 'TodosController',
+            'todoItems' => $todoItems
         ]);
     }
 
