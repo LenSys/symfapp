@@ -12,21 +12,25 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                <th scope="col">Todo name</th>
-                <th scope="col">Is complete?</th>
+                    <th scope="col">Todo name</th>
+                    <th scope="col">Is complete?</th>
+                    <th scope="col"> </th>
                 </tr>
             </thead>
             <tbody>
                 {% for todoItem in todoItems %}
                     <tr>
-                    <td>{{ todoItem.name }}</td>
-                    <td>
-                        {% if(todoItem.isIsComplete) %}
-                            <span class="text-success">✓</span>
-                        {% else %}  
-                            <span class="text-danger">x</span>
-                        {% endif %}
-                    </td>
+                        <td>{{ todoItem.name }}</td>
+                        <td>
+                            {% if(todoItem.isIsComplete) %}
+                                <span class="text-success">✓</span>
+                            {% else %}  
+                                <span class="text-danger">x</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ path('app_todos.edit', { id: todoItem.id }) }}">Edit Todo</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

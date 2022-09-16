@@ -47,4 +47,29 @@ class TodosController extends AbstractController
             'todo_item_form' => $todoItemForm->createView()
         ]);
     }
+
+
+    #[Route('/edit/{id}', methods: ['GET', 'POST'], name: 'edit')]
+    public function edit($id, Request $request, EntityManagerInterface $entityManager):Response 
+    {
+        $todoRepository = $entityManager->getRepository(TodoItem::class);
+        $todoItem = $todoRepository->find($id);
+        $todoItemForm = $this->createForm(TodoItemFormType::class, $todoItem);
+
+        $todoItemForm->handleRequest($request);
+
+        // check if form is submitted and valid
+        if($todoItemForm->isSubmitted() && $todoItemForm->isValid()) {
+            // save form input into database table
+            $entityManager->persist($todoItem);
+            $entityManager->flush();
+
+            // redirect to index page of todos
+            return $this->redirect($this->generateUrl(route:'app_todos.index'));
+        }
+
+        return $this->render('todos/edit.html.twig', [
+            'todo_item_form' => $todoItemForm->createView()
+        ]);
+    }
 }
