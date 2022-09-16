@@ -8,6 +8,9 @@
     <h1>Symfony Todo App</h1>
 
     <h2>Create Todo</h2>
+
+    {{ form(todo_item_form) }}
+
     <a class="btn btn-primary" href="{{ path('app_todos.index') }}">Show all Todos</a>
 </div>
 {% endblock %}
